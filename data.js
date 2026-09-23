@@ -23,6 +23,8 @@ var SSL_DATA = {
 		lema: 'Semana donde todo el mundo se ve, tiempo de pasión y tiempo de vivencia con los amigos y hermanos.',
 		fechas: { inicio: '2027-03-19', fin: '2027-03-28', texto: '19 al 28 de marzo de 2027' },
 		organo: 'Junta Mayor de Cofradías de la Semana Santa de León',
+		// Cuenta atrás de la home: hora local de León (zona Europe/Madrid)
+		cuentaAtras: { fecha: '2027-03-19', hora: '20:00', zona: 'Europe/Madrid', mensajeFinal: 'Ya está aquí la Semana Santa' },
 		// Los horarios de 2027 aún no están publicados: se muestran los del último programa oficial.
 		notaHorarios: 'Horarios y salidas tomados del último programa oficial publicado (2026) como referencia. Pendientes de confirmación por la Junta Mayor para 2027.'
 	},
@@ -869,7 +871,9 @@ var SSL_DATA = {
 	],
 
 	/* ---------- Bandas musicales ----------
-	   Solo nombres verificados (programa y fichas oficiales). descripcion: pendiente.
+	   Solo nombres verificados (programa y fichas oficiales) o facilitados expresamente. descripcion: pendiente.
+	   repertorio: lista propia de cada banda, p. ej. [{ titulo: '...', autor: '...' }]. Vacía hasta tener datos reales.
+	   cofradia/vinculada: relación interna; no se muestra en la página de bandas.
 	   tipo: 'agrupacion-musical' | 'cornetas-tambores' | 'banda-musica' */
 	tiposBanda: [
 		{ id: 'agrupacion-musical', nombre: 'Agrupaciones Musicales', ancla: 'agrupaciones-musicales' },
@@ -877,19 +881,20 @@ var SSL_DATA = {
 		{ id: 'banda-musica', nombre: 'Bandas de Música', ancla: 'bandas-de-musica' }
 	],
 	bandas: [
-		{ id: 'am-angustias', nombre: 'Agrupación Musical Nuestra Señora de las Angustias y Soledad', tipo: 'agrupacion-musical', cofradia: 'angustias-soledad', descripcion: null },
-		{ id: 'am-dulce-nombre', nombre: 'Agrupación Musical del Dulce Nombre de Jesús Nazareno', tipo: 'agrupacion-musical', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null },
-		{ id: 'am-divino-obrero', nombre: 'Agrupación Musical Real Hermandad de Jesús Divino Obrero', tipo: 'agrupacion-musical', cofradia: 'divino-obrero', descripcion: null },
-		{ id: 'am-bienaventuranza', nombre: 'Agrupación Musical Santo Cristo de la Bienaventuranza', tipo: 'agrupacion-musical', cofradia: 'bienaventuranza', descripcion: null },
-		{ id: 'am-santo-sepulcro', nombre: 'Agrupación Musical Santo Sepulcro – Esperanza de la Vida', tipo: 'agrupacion-musical', cofradia: 'santo-sepulcro', descripcion: null },
-		{ id: 'am-gran-poder', nombre: 'Agrupación Musical Cristo del Gran Poder', tipo: 'agrupacion-musical', cofradia: 'gran-poder', descripcion: null },
-		{ id: 'cct-dulce-nombre', nombre: 'Banda de Cornetas y Tambores del Dulce Nombre de Jesús Nazareno', tipo: 'cornetas-tambores', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null },
-		{ id: 'cct-minerva', nombre: 'Banda de Cornetas y Tambores de la Real Cofradía de Minerva y Vera Cruz', tipo: 'cornetas-tambores', cofradia: 'minerva-vera-cruz', descripcion: null },
-		{ id: 'cct-desenclavo', nombre: 'Banda de Cornetas y Tambores del Santo Cristo del Desenclavo', tipo: 'cornetas-tambores', cofradia: 'desenclavo', descripcion: null },
-		{ id: 'cct-victoria', nombre: 'Banda de Cornetas y Tambores Santísimo Cristo de la Victoria', tipo: 'cornetas-tambores', cofradia: null, vinculada: 'amparo-leoneses', descripcion: null },
-		{ id: 'bm-dulce-nombre', nombre: 'Banda de Música del Dulce Nombre de Jesús Nazareno', tipo: 'banda-musica', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null },
-		{ id: 'bm-siete-palabras', nombre: 'Banda de Música Siete Palabras', tipo: 'banda-musica', cofradia: 'siete-palabras', descripcion: null },
+		{ id: 'am-angustias', nombre: 'Agrupación Musical Nuestra Señora de las Angustias y Soledad', tipo: 'agrupacion-musical', cofradia: 'angustias-soledad', descripcion: null, repertorio: [] },
+		{ id: 'am-dulce-nombre', nombre: 'Agrupación Musical del Dulce Nombre de Jesús Nazareno', tipo: 'agrupacion-musical', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
+		{ id: 'am-divino-obrero', nombre: 'Agrupación Musical Real Hermandad de Jesús Divino Obrero', tipo: 'agrupacion-musical', cofradia: 'divino-obrero', descripcion: null, repertorio: [] },
+		{ id: 'am-bienaventuranza', nombre: 'Agrupación Musical Santo Cristo de la Bienaventuranza', tipo: 'agrupacion-musical', cofradia: 'bienaventuranza', descripcion: null, repertorio: [] },
+		{ id: 'am-santo-sepulcro', nombre: 'Agrupación Musical Santo Sepulcro – Esperanza de la Vida', tipo: 'agrupacion-musical', cofradia: 'santo-sepulcro', descripcion: null, repertorio: [] },
+		{ id: 'am-gran-poder', nombre: 'Agrupación Musical Cristo del Gran Poder', tipo: 'agrupacion-musical', cofradia: 'gran-poder', descripcion: null, repertorio: [] },
+		{ id: 'cct-dulce-nombre', nombre: 'Banda de Cornetas y Tambores del Dulce Nombre de Jesús Nazareno', tipo: 'cornetas-tambores', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
+		{ id: 'cct-minerva', nombre: 'Banda de Cornetas y Tambores de la Real Cofradía de Minerva y Vera Cruz', tipo: 'cornetas-tambores', cofradia: 'minerva-vera-cruz', descripcion: null, repertorio: [] },
+		{ id: 'cct-desenclavo', nombre: 'Banda de Cornetas y Tambores del Santo Cristo del Desenclavo', tipo: 'cornetas-tambores', cofradia: 'desenclavo', descripcion: null, repertorio: [] },
+		{ id: 'cct-victoria', nombre: 'Banda de Cornetas y Tambores Santísimo Cristo de la Victoria', tipo: 'cornetas-tambores', cofradia: null, vinculada: 'amparo-leoneses', descripcion: null, repertorio: [] },
+		{ id: 'bm-dulce-nombre', nombre: 'Banda de Música del Dulce Nombre de Jesús Nazareno', tipo: 'banda-musica', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
+		{ id: 'bm-siete-palabras', nombre: 'Banda de Música Siete Palabras', tipo: 'banda-musica', cofradia: 'siete-palabras', descripcion: null, repertorio: [] },
+		{ id: 'bm-reino-de-leon', nombre: 'Banda del Reino de León', tipo: 'banda-musica', cofradia: null, descripcion: null, repertorio: [] },
 		// Tipo no confirmado: no se muestra hasta verificarlo.
-		{ id: 'sm-perdon', nombre: 'Sección de Música de la Cofradía Santo Cristo del Perdón', tipo: null, cofradia: 'perdon', descripcion: null }
+		{ id: 'sm-perdon', nombre: 'Sección de Música de la Cofradía Santo Cristo del Perdón', tipo: null, cofradia: 'perdon', descripcion: null, repertorio: [] }
 	]
 };

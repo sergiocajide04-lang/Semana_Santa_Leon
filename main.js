@@ -91,6 +91,19 @@
 		return '<li><a href="' + cofradiaUrl(c) + '">' + esc(c.nombreCorto) + '</a></li>';
 	}).join(''));
 
+	/* Home: estadísticas calculadas desde los datos (sin duplicar cifras) */
+	var anios = DATA.cofradias.map(function (c) { return c.fundacion; });
+	var STATS = {
+		cofradias: DATA.cofradias.length,
+		dias: DATA.dias.length,
+		antigua: anios.length ? Math.min.apply(null, anios) : null,
+		reciente: anios.length ? Math.max.apply(null, anios) : null
+	};
+	document.querySelectorAll('[data-stat]').forEach(function (b) {
+		var v = STATS[b.dataset.stat];
+		if (v != null) b.textContent = v;
+	});
+
 	/* Home: tarjetas de cofradías (carrusel) */
 	render('home-cofradias', DATA.cofradias.map(function (c) {
 		return '<div class="featured swiper-slide">' +
@@ -340,11 +353,20 @@
 				'<span class="bandas-count">' + lista.length + '</span>' +
 			'</header>' +
 			(lista.length ? '<ul class="banda-cards">' + lista.map(function (b) {
-				var c = byId(DATA.cofradias, b.cofradia || b.vinculada);
+				// La relación con la cofradía (b.cofradia / b.vinculada) se mantiene en los datos pero no se muestra.
+				var rep = b.repertorio || [];
 				return '<li class="banda-card" id="banda-' + esc(b.id) + '">' +
 					'<span class="banda-card-name">' + esc(b.nombre) + '</span>' +
-					(c ? '<a class="banda-card-link" href="' + cofradiaUrl(c) + '">' + (b.cofradia ? 'Sección musical de ' : 'Vinculada a ') + esc(c.nombreCorto) + '</a>' : '') +
 					(b.descripcion ? '<p>' + esc(b.descripcion) + '</p>' : '') +
+					'<div class="banda-repertorio">' +
+						'<h3 class="banda-repertorio-title">Repertorio</h3>' +
+						(rep.length
+							? '<ol class="repertorio-list">' + rep.map(function (r) {
+								return '<li><span class="repertorio-titulo">' + esc(r.titulo) + '</span>' +
+									(r.autor ? '<span class="repertorio-autor">' + esc(r.autor) + '</span>' : '') + '</li>';
+							}).join('') + '</ol>'
+							: '<p class="repertorio-empty">Repertorio próximamente.</p>') +
+					'</div>' +
 				'</li>';
 			}).join('') + '</ul>' : '<p class="agenda-empty">Listado pendiente de publicación.</p>') +
 		'</section>';
@@ -384,6 +406,78 @@
 			});
 		});
 		introObserver.observe(intro);
+	}
+
+	/* ---------- Cuenta atrás hasta la Semana Santa ---------- */
+	var cdEl = document.getElementById('countdown');
+	var CD = DATA.evento && DATA.evento.cuentaAtras;
+	if (cdEl && CD) {
+		// Convierte una fecha/hora local de una zona IANA (Europe/Madrid) a milisegundos UTC
+		var zonedToUtc = function (fecha, hora, zona) {
+			var d = fecha.split('-').map(Number);
+			var h = hora.split(':').map(Number);
+			var guess = Date.UTC(d[0], d[1] - 1, d[2], h[0], h[1], 0);
+			try {
+				var v = {};
+				new Intl.DateTimeFormat('en-US', {
+					timeZone: zona, hourCycle: 'h23',
+					year: 'numeric', month: '2-digit', day: '2-digit',
+					hour: '2-digit', minute: '2-digit', second: '2-digit'
+				}).formatToParts(new Date(guess)).forEach(function (x) { v[x.type] = +x.value; });
+				var offset = Date.UTC(v.year, v.month - 1, v.day, v.hour % 24, v.minute, v.second) - guess;
+				return guess - offset;
+			} catch (e) {
+				return guess - 3600000; // Sin soporte de zonas: CET (UTC+1), vigente en León el 19 de marzo
+			}
+		};
+
+		var cdTarget = zonedToUtc(CD.fecha, CD.hora, CD.zona);
+		var units = {};
+		cdEl.querySelectorAll('[data-unit]').forEach(function (b) { units[b.dataset.unit] = b; });
+		var edicionEl = cdEl.querySelector('[data-countdown="edicion"]');
+		if (edicionEl && DATA.evento.edicion) edicionEl.textContent = DATA.evento.edicion;
+		var shown = {};
+		var cdTimer = null;
+		var cdDone = false;
+		var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+		var stopCountdown = function () {
+			if (cdTimer) { clearTimeout(cdTimer); cdTimer = null; }
+		};
+		var finishCountdown = function () {
+			cdDone = true;
+			stopCountdown();
+			cdEl.classList.add('is-done');
+			cdEl.querySelector('.countdown-title').hidden = true;
+			cdEl.querySelector('.countdown-units').hidden = true;
+			var done = cdEl.querySelector('.countdown-done');
+			done.textContent = CD.mensajeFinal;
+			done.hidden = false;
+		};
+		// Un único temporizador: se reprograma para el siguiente cambio de segundo
+		var tick = function () {
+			cdTimer = null;
+			var ms = cdTarget - Date.now();
+			if (ms <= 0) { finishCountdown(); return; }
+			var s = Math.floor(ms / 1000);
+			var vals = {
+				dias: String(Math.floor(s / 86400)),
+				horas: pad(Math.floor(s % 86400 / 3600)),
+				minutos: pad(Math.floor(s % 3600 / 60)),
+				segundos: pad(s % 60)
+			};
+			for (var k in vals) {
+				if (units[k] && shown[k] !== vals[k]) { units[k].textContent = vals[k]; shown[k] = vals[k]; }
+			}
+			cdTimer = setTimeout(tick, (ms % 1000) + 20);
+		};
+		// Sin trabajo mientras la pestaña está oculta; limpieza al abandonar la página
+		document.addEventListener('visibilitychange', function () {
+			if (document.hidden) stopCountdown();
+			else if (!cdDone && !cdTimer) tick();
+		});
+		window.addEventListener('pagehide', stopCountdown);
+		window.addEventListener('pageshow', function () { if (!cdDone && !cdTimer) tick(); });
+		tick();
 	}
 
 	/* ---------- Sliders (Swiper) ---------- */

@@ -110,20 +110,39 @@
 							</div>
 						</div>
 
+						<!-- Las cifras se calculan desde data.js (el HTML solo es el valor por defecto) -->
 						<ul id="intro-data" class="intro-data">
 							<li>
-								<span class="number"><b>16</b></span>
+								<span class="number"><b data-stat="cofradias">16</b></span>
 								<p>Cofradías</p>
 							</li>
 							<li>
-								<span class="number"><b>10</b></span>
+								<span class="number"><b data-stat="dias">10</b></span>
 								<p>Días de procesiones</p>
 							</li>
 							<li>
-								<span class="number"><b>1578</b></span>
+								<span class="number"><b data-stat="antigua">1578</b></span>
 								<p>Cofradía más antigua</p>
 							</li>
+							<li>
+								<span class="number"><b data-stat="reciente">1994</b></span>
+								<p>Cofradía más reciente</p>
+							</li>
 						</ul>
+
+						<!-- Cuenta atrás hasta el inicio de la Semana Santa (fecha en data.js) -->
+						<div class="wrap">
+							<div class="countdown" id="countdown" aria-live="off">
+								<p class="countdown-title">Faltan para la Semana Santa <span data-countdown="edicion">2027</span></p>
+								<ol class="countdown-units">
+									<li><b data-unit="dias">--</b><span>Días</span></li>
+									<li><b data-unit="horas">--</b><span>Horas</span></li>
+									<li><b data-unit="minutos">--</b><span>Minutos</span></li>
+									<li><b data-unit="segundos">--</b><span>Segundos</span></li>
+								</ol>
+								<p class="countdown-done" hidden>Ya está aquí la Semana Santa</p>
+							</div>
+						</div>
 					</section>
 
 					<!-- Procesiones -->
