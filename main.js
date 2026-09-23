@@ -194,7 +194,12 @@
 	function metaRow(label, value) {
 		return value ? '<dt>' + label + '</dt><dd>' + value + '</dd>' : '';
 	}
+	function itineraryList(list) {
+		return '<ol class="itinerary">' + list.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>';
+	}
 	function procesionHtml(p) {
+		var d = byId(DATA.dias, p.dia);
+		var f = d && parseFecha(d.fecha);
 		var html = '<li class="agenda-item" id="proc-' + esc(p.id) + '" data-slug="' + esc(p.slug) + '">' +
 			'<div class="agenda-time">' + (p.hora ? esc(p.hora) + '<small>h</small>' : '<span class="agenda-tbd">Hora por confirmar</span>') + '</div>' +
 			'<div class="agenda-body">' +
@@ -202,21 +207,35 @@
 				'<h3 class="agenda-title">' + esc(p.nombre) + '</h3>' +
 				(p.subtitulo ? '<p class="agenda-subtitle">' + esc(p.subtitulo) + '</p>' : '') +
 				'<dl class="agenda-meta">' +
+					metaRow('Día', d && esc(d.nombre + ', ' + f.dia + ' de ' + f.mes)) +
 					metaRow('Organiza', organizadores(p)) +
 					metaRow('Salida', esc(p.salida)) +
 					metaRow('Lugar', esc(p.lugar)) +
 					metaRow('Música', p.musica && esc(p.musica.join(' y '))) +
 				'</dl>';
 		if (p.notas) html += '<p class="agenda-notes">' + esc(p.notas) + '</p>';
-		if (p.recorrido && p.recorrido.length) {
-			html += '<details class="agenda-details"><summary>Itinerario</summary><ol class="itinerary">' +
-				p.recorrido.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol></details>';
+		var tieneRecorrido = p.recorrido && p.recorrido.length;
+		if (tieneRecorrido) {
+			html += '<details class="agenda-details"><summary>Itinerario</summary>' + itineraryList(p.recorrido) +
+				(p.recorridosExtra || []).map(function (x) {
+					return '<p class="itinerary-extra-title">' + esc(x.nombre) + '</p>' + itineraryList(x.recorrido);
+				}).join('') +
+				'</details>';
 		} else if (p.tipo === 'procesion') {
 			html += '<p class="agenda-notes agenda-pending">Itinerario pendiente de publicación.</p>';
 		}
 		if (p.pasos && p.pasos.length) {
 			html += '<details class="agenda-details"><summary>Pasos (' + p.pasos.length + ')</summary><ul class="pasos-list">' +
 				p.pasos.map(function (x) { return '<li><strong>' + esc(x.nombre) + '</strong>' + pasoDetalle(x) + '</li>'; }).join('') + '</ul></details>';
+		} else if (p.tipo === 'procesion') {
+			html += '<details class="agenda-details"><summary>Pasos</summary><p class="agenda-notes agenda-pending">Información no disponible.</p></details>';
+		}
+		// Mapa del itinerario (se abre en una ventana con el trazado de esta procesión)
+		if (tieneRecorrido) {
+			html += '<button type="button" class="map-trigger" data-map="' + esc(p.id) + '" aria-haspopup="dialog">' +
+				'<span>Mapa</span>' +
+				'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg>' +
+			'</button>';
 		}
 		return html + '</div></li>';
 	}
@@ -590,6 +609,134 @@
 		});
 	}
 
+	/* ---------- Mapa del itinerario (Leaflet y rutas.js se cargan solo al abrir el primer mapa) ---------- */
+	if (document.querySelector('.map-trigger')) {
+		var LEAFLET = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/';
+		var mapDeps = null, mapModal = null, leafletMap = null, routeLayer = null, lastTrigger = null;
+		var loadScript = function (src) {
+			return new Promise(function (resolve, reject) {
+				var s = document.createElement('script');
+				s.src = src; s.onload = resolve; s.onerror = reject;
+				document.head.appendChild(s);
+			});
+		};
+		var loadDeps = function () {
+			if (!mapDeps) {
+				var css = document.createElement('link');
+				css.rel = 'stylesheet'; css.href = LEAFLET + 'leaflet.min.css';
+				document.head.appendChild(css);
+				mapDeps = Promise.all([loadScript(LEAFLET + 'leaflet.min.js'), loadScript('rutas.js')]);
+				mapDeps.catch(function () { mapDeps = null; }); // permite reintentar si falla la red
+			}
+			return mapDeps;
+		};
+		var buildModal = function () {
+			mapModal = document.createElement('div');
+			mapModal.className = 'map-modal';
+			mapModal.hidden = true;
+			mapModal.setAttribute('role', 'dialog');
+			mapModal.setAttribute('aria-modal', 'true');
+			mapModal.setAttribute('aria-labelledby', 'map-modal-title');
+			mapModal.innerHTML =
+				'<div class="map-modal-panel">' +
+					'<header class="map-modal-header">' +
+						'<div><p class="pre map-modal-day"></p><h2 class="map-modal-title" id="map-modal-title"></h2></div>' +
+						'<button type="button" class="map-modal-close" aria-label="Cerrar mapa">' +
+							'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>' +
+						'</button>' +
+					'</header>' +
+					'<div class="map-modal-map"><div class="map-canvas"></div><p class="map-status" role="status"></p></div>' +
+					'<footer class="map-modal-legend">' +
+						'<span class="lg lg-route">Recorrido</span>' +
+						'<span class="lg lg-start">Salida</span>' +
+						'<span class="lg lg-end">Llegada</span>' +
+						'<span class="lg lg-extra" hidden></span>' +
+						'<span class="map-modal-note">Trazado aproximado sobre las calles del itinerario.</span>' +
+					'</footer>' +
+				'</div>';
+			document.body.appendChild(mapModal);
+			mapModal.querySelector('.map-modal-close').addEventListener('click', closeMap);
+			mapModal.addEventListener('click', function (e) { if (e.target === mapModal) closeMap(); });
+		};
+		var setStatus = function (text) {
+			var st = mapModal.querySelector('.map-status');
+			st.textContent = text || '';
+			st.hidden = !text;
+		};
+		var drawRoute = function (p) {
+			var L = window.L, ruta = window.SSL_RUTAS && window.SSL_RUTAS[p.id];
+			if (!ruta) { setStatus('Recorrido no disponible en el mapa.'); return; }
+			if (!leafletMap) {
+				leafletMap = L.map(mapModal.querySelector('.map-canvas'), { zoomControl: true, maxZoom: 19 });
+				// Vista de satélite + capa de calles y nombres (Esri, sin clave)
+				L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+					maxZoom: 19, attribution: 'Imagen &copy; Esri, Maxar, Earthstar Geographics'
+				}).addTo(leafletMap);
+				L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}', {
+					maxZoom: 19, opacity: 0.55
+				}).addTo(leafletMap);
+				L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+					maxZoom: 19
+				}).addTo(leafletMap);
+				leafletMap.attributionControl.addAttribution('Recorrido: datos &copy; colaboradores de OpenStreetMap');
+				routeLayer = L.layerGroup().addTo(leafletMap);
+			}
+			routeLayer.clearLayers();
+			// Calles del recorrido iluminadas: halo + contorno + línea dorada
+			L.polyline(ruta.linea, { color: '#ffd978', weight: 18, opacity: 0.28, lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(routeLayer);
+			L.polyline(ruta.linea, { color: '#2f1239', weight: 8, opacity: 0.85, lineCap: 'round', lineJoin: 'round', interactive: false }).addTo(routeLayer);
+			var main = L.polyline(ruta.linea, { color: '#ffd24d', weight: 4.5, opacity: 1, lineCap: 'round', lineJoin: 'round' }).addTo(routeLayer);
+			var bounds = main.getBounds();
+			var extraLabel = mapModal.querySelector('.lg-extra');
+			extraLabel.hidden = !ruta.extra.length;
+			ruta.extra.forEach(function (x) {
+				L.polyline(x.linea, { color: '#2f1239', weight: 7, opacity: 0.8, interactive: false }).addTo(routeLayer);
+				var ex = L.polyline(x.linea, { color: '#e3c2f5', weight: 4, opacity: 1, dashArray: '8 7' }).bindTooltip(x.nombre).addTo(routeLayer);
+				bounds.extend(ex.getBounds());
+				extraLabel.textContent = x.nombre;
+			});
+			var mismoPunto = leafletMap.distance(ruta.inicio, ruta.fin) < 40;
+			L.circleMarker(ruta.fin, { radius: 9, color: '#fff', weight: 3, fillColor: '#6b2a86', fillOpacity: 1 })
+				.bindTooltip('Llegada').addTo(routeLayer);
+			L.circleMarker(ruta.inicio, { radius: mismoPunto ? 6 : 9, color: '#fff', weight: 3, fillColor: '#1f9d55', fillOpacity: 1 })
+				.bindTooltip((mismoPunto ? 'Salida y llegada: ' : 'Salida: ') + (p.salida || '')).addTo(routeLayer);
+			leafletMap.invalidateSize();
+			leafletMap.fitBounds(bounds, { padding: [28, 28] });
+			setStatus('');
+		};
+		var openMap = function (id, trigger) {
+			var p = byId(DATA.procesiones, id);
+			if (!p) return;
+			if (!mapModal) buildModal();
+			lastTrigger = trigger;
+			var d = byId(DATA.dias, p.dia), f = d && parseFecha(d.fecha);
+			mapModal.querySelector('.map-modal-day').textContent = d ? d.nombre + ' · ' + f.dia + ' de ' + f.mes + (p.hora ? ' · ' + p.hora + ' h' : '') : '';
+			mapModal.querySelector('.map-modal-title').textContent = p.nombre;
+			mapModal.hidden = false;
+			document.body.classList.add('map-open');
+			mapModal.querySelector('.map-modal-close').focus();
+			setStatus('Cargando mapa…');
+			loadDeps().then(function () {
+				if (!mapModal.hidden) requestAnimationFrame(function () { drawRoute(p); });
+			}).catch(function () {
+				setStatus('No se ha podido cargar el mapa. Comprueba la conexión e inténtalo de nuevo.');
+			});
+		};
+		var closeMap = function () {
+			if (!mapModal || mapModal.hidden) return;
+			mapModal.hidden = true;
+			document.body.classList.remove('map-open');
+			if (lastTrigger) lastTrigger.focus();
+		};
+		document.addEventListener('click', function (e) {
+			var t = e.target.closest && e.target.closest('.map-trigger');
+			if (t) openMap(t.dataset.map, t);
+		});
+		document.addEventListener('keydown', function (e) {
+			if (e.key === 'Escape') closeMap();
+		});
+	}
+
 	/* ---------- Footer parallax: el main deja hueco para el footer fijo ---------- */
 	var main = document.getElementById('main');
 	var footer = document.getElementById('footer');
@@ -610,6 +757,23 @@
 	if (location.hash.length > 1) {
 		var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
 		if (target) setTimeout(function () { target.scrollIntoView(); }, 50);
+	}
+
+	/* ---------- Cabecera fija: fondo morado en cuanto se hace scroll ---------- */
+	var siteHeader = document.getElementById('site-header');
+	if (siteHeader) {
+		// Centinela en los primeros 40 px: sin listener de scroll
+		var headerSentinel = document.createElement('div');
+		headerSentinel.setAttribute('aria-hidden', 'true');
+		headerSentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:40px;pointer-events:none';
+		document.body.appendChild(headerSentinel);
+		if ('IntersectionObserver' in window) {
+			new IntersectionObserver(function (entries) {
+				siteHeader.classList.toggle('is-scrolled', !entries[0].isIntersecting);
+			}).observe(headerSentinel);
+		} else {
+			siteHeader.classList.add('is-scrolled');
+		}
 	}
 
 	/* ---------- Botón volver arriba ---------- */

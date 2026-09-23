@@ -736,23 +736,27 @@ var SSL_DATA = {
 			]
 		},
 
-		/* Miércoles Santo */
+		/* Miércoles Santo
+		   Del Miércoles Santo en adelante: horarios, salidas e itinerarios del documento «CAJIDE». */
 		{
 			id: 'camino-calvario', slug: 'procesion-jesus-camino-del-calvario', dia: 'miercoles-santo', tipo: 'procesion',
 			nombre: 'Procesión Jesús Camino del Calvario', hora: '20:00',
 			cofradias: ['agonia'], salida: 'Iglesia de Santa Marina la Real',
+			recorrido: ['Serranos', 'Plaza Torres de Omaña', 'Sierra Pambley', 'Catedral', 'Calle Ancha', 'Ruiz de Salazar', 'Plaza de San Isidoro', 'Descalzos', 'Corral de San Guisán', 'Serranos'],
 			pasos: [{ paso: 'ag-via-crucis', nombre: 'Jesús del Vía Crucis' }]
 		},
 		{
 			id: 'amargura', slug: 'procesion-virgen-de-la-amargura', dia: 'miercoles-santo', tipo: 'procesion',
 			nombre: 'Procesión de la Virgen de la Amargura', hora: '20:30',
 			cofradias: ['minerva-vera-cruz'], salida: 'Convento de las RR.MM. Benedictinas (Carbajalas)',
+			recorrido: ['Plaza del Grano', 'Fernández Cadórniga', 'Plaza de San Martín', 'Plaza Mayor', 'Catedral', 'Calle Ancha', 'Plaza de San Marcelo', 'Teatro', 'Rúa', 'Plaza de las Concepciones', 'Fernández Cadórniga', 'Plaza del Grano'],
 			pasos: [{ paso: 'mv-amargura', nombre: 'Virgen de la Amargura' }]
 		},
 		{
 			id: 'silencio', slug: 'procesion-del-silencio', dia: 'miercoles-santo', tipo: 'procesion',
 			nombre: 'Procesión del Silencio', hora: '20:30',
-			cofradias: ['expiracion-silencio'], salida: 'Interior de la Iglesia de San Francisco'
+			cofradias: ['expiracion-silencio'], salida: 'Iglesia de San Francisco de Asís',
+			recorrido: ['Corredera', 'Avenida Independencia', 'Plaza de Santo Domingo', 'Gran Vía de San Marcos', 'Plaza de la Inmaculada', 'Alférez Provisional', 'San Agustín', 'Alfonso V', 'Avenida Ordoño II', 'Avenida Independencia', 'Plaza de San Marcelo', 'Rúa', 'Corredera', 'Iglesia de San Francisco de Asís']
 		},
 		{
 			id: 'via-crucis-perdon', slug: 'solemne-via-crucis-popular', dia: 'miercoles-santo', tipo: 'procesion',
@@ -766,43 +770,51 @@ var SSL_DATA = {
 		},
 		{
 			id: 'via-crucis-siete-palabras', slug: 'solemne-via-crucis-procesional-siete-palabras', dia: 'miercoles-santo', tipo: 'procesion',
-			nombre: 'Solemne Vía Crucis Procesional', hora: '24:00',
+			nombre: 'Solemne Vía Crucis Procesional', hora: '00:00',
 			cofradias: ['siete-palabras'], salida: 'Iglesia de San Marcelo',
+			recorrido: ['Legión VII', 'Avenida Independencia', 'Plaza de San Francisco', 'Las Cercas', 'Puerta Moneda', 'Herreros', 'Plaza del Grano', 'Juan II', 'Plaza de las Concepciones', 'Rúa', 'Plaza de San Marcelo', 'Iglesia de San Marcelo'],
+			notas: 'Sale a las 00:00, en la medianoche del Miércoles al Jueves Santo.',
 			pasos: [{ paso: 'sp-septima', nombre: 'Santísimo Cristo de la Agonía' }]
 		},
 
 		/* Jueves Santo */
 		{
-			id: 'pregon-caballo', slug: 'pregon-a-caballo', dia: 'jueves-santo', tipo: 'acto',
-			nombre: 'Pregón a Caballo', hora: '12:30',
-			cofradias: ['siete-palabras'], salida: 'Plaza de San Marcelo'
+			id: 'bienaventuranzas', slug: 'procesion-de-las-bienaventuranzas', dia: 'jueves-santo', tipo: 'procesion',
+			nombre: 'Procesión de las Bienaventuranzas', hora: '08:45',
+			cofradias: ['bienaventuranza'], salida: 'Iglesia de San Claudio',
+			recorrido: ['Covadonga', 'Jardín de San Francisco', 'Hospicio', 'Plaza del Grano', 'Santa Cruz', 'Plaza Mayor', 'Catedral (Acto de las Bienaventuranzas, hacia las 11:30)', 'Sierra Pambley', 'Calle Ancha', 'Varillas', 'Plaza de San Martín', 'Fernández Cadórniga', 'Plaza de las Concepciones', 'Jardín de San Francisco', 'Covadonga', 'Iglesia de San Claudio'],
+			notas: 'Al llegar a la Catedral se lee el Sermón de las Bienaventuranzas.'
 		},
 		{
-			id: 'bienaventuranzas', slug: 'procesion-de-las-bienaventuranzas', dia: 'jueves-santo', tipo: 'procesion',
-			nombre: 'Procesión de las Bienaventuranzas', hora: null,
-			cofradias: ['bienaventuranza'],
-			notas: 'Se celebra en la mañana del Jueves Santo. Al llegar a la Catedral se lee el Sermón de las Bienaventuranzas.'
+			id: 'pregon-caballo', slug: 'pregon-a-caballo', dia: 'jueves-santo', tipo: 'acto',
+			nombre: 'Pregón a Caballo', hora: '12:30',
+			cofradias: ['siete-palabras'], salida: 'Plaza de San Marcelo',
+			recorrido: ['Legión VII', 'Avenida Independencia', 'Plaza de Santo Domingo', 'Calle Ancha', 'Varillas', 'Plaza Mayor', 'Catedral', 'Sierra Pambley', 'Cervantes', 'Plaza de Torres de Omaña', 'Plaza de San Isidoro', 'Cid', 'Ruiz de Salazar', 'Plaza de San Marcelo']
 		},
 		{
 			id: 'despedida', slug: 'procesion-de-la-despedida', dia: 'jueves-santo', tipo: 'procesion',
 			nombre: 'Procesión de la Despedida', hora: '17:00',
-			cofradias: ['gran-poder'], salida: 'Patio de MIRESI (antiguas HH. Trinitarias)'
+			cofradias: ['gran-poder'], salida: 'Patio de las Hermanas Trinitarias',
+			recorrido: ['San Lorenzo', 'Plaza Puerta Obispo', 'Calle Ancha', 'Cid', 'Plaza de San Isidoro (Acto de la Despedida)', 'Sacramento', 'Plaza de Santo Martino', 'Plaza Puerta Castillo', 'Cubos', 'Pontón', 'Patio de las Hermanas Trinitarias']
 		},
 		{
 			id: 'maria-pie-cruz', slug: 'procesion-maria-al-pie-de-la-cruz', dia: 'jueves-santo', tipo: 'procesion',
 			nombre: 'Procesión María al pie de la Cruz, Camino de la Esperanza', hora: '19:00',
-			cofradias: ['maria-dulce-nombre'], salida: 'Plaza de los Donantes de Sangre'
+			cofradias: ['maria-dulce-nombre'], salida: 'Plaza de los Donantes de Sangre',
+			recorrido: ['Corredera', 'Plaza de las Concepciones', 'Fernández Cadórniga', 'Plaza de San Martín', 'Plaza Mayor', 'Catedral', 'Calle Ancha', 'Plaza de San Marcelo', 'Rúa', 'Plaza de las Concepciones', 'Corredera', 'Plaza de los Donantes de Sangre']
 		},
 		{
 			id: 'sagrada-cena', slug: 'procesion-de-la-sagrada-cena', dia: 'jueves-santo', tipo: 'procesion',
 			nombre: 'Procesión de la Sagrada Cena', hora: '20:00',
-			cofradias: ['santa-marta'], salida: 'Plaza de Regla',
+			cofradias: ['santa-marta'], salida: 'Plaza de la Catedral',
+			recorrido: ['Calle Ancha', 'Plaza de San Marcelo', 'Plaza de Santo Domingo', 'Avenida Padre Isla', 'Plaza de la Inmaculada', 'Gran Vía de San Marcos', 'Plaza de Santo Domingo', 'Plaza de San Marcelo', 'Calle Ancha', 'Plaza de la Catedral'],
 			pasos: [{ paso: 'sm-sagrada-cena', nombre: 'La Sagrada Cena' }]
 		},
 		{
 			id: 'tinieblas', slug: 'procesion-de-las-tinieblas', dia: 'jueves-santo', tipo: 'procesion',
-			nombre: 'Procesión de las Tinieblas y Santo Cristo de las Injurias', hora: '20:30',
+			nombre: 'Procesión de las Tinieblas y Santo Cristo de las Injurias', hora: '20:45',
 			cofradias: ['desenclavo'], salida: 'Patio del Colegio Leonés',
+			recorrido: ['Serranos', 'Plaza de Torres de Omaña', 'Fernando García Regueral', 'Plaza de San Isidoro', 'Plaza de Santo Martino', 'Plaza Puerta Castillo', 'Santa Marina', 'Convento', 'Cardenal Landázuri', 'Serranos', 'Patio del Colegio Leonés'],
 			pasos: [{ paso: 'de-injurias', nombre: 'Santo Cristo de las Injurias' }]
 		},
 		{
@@ -817,7 +829,8 @@ var SSL_DATA = {
 		{
 			id: 'pasos', slug: 'procesion-de-los-pasos', dia: 'viernes-santo', tipo: 'procesion',
 			nombre: 'Procesión de los Pasos', hora: '07:15',
-			cofradias: ['dulce-nombre-jesus-nazareno'], salida: 'Capilla de Santa Nonia',
+			cofradias: ['dulce-nombre-jesus-nazareno'], salida: 'Iglesia de Santa Nonia',
+			recorrido: ['Jardín de San Francisco', 'Hospicio', 'Plaza del Grano', 'Santa Cruz', 'Plaza Mayor (Acto del Encuentro, hacia las 10:30)', 'Catedral', 'Cardenal Landázuri', 'Plaza del Vizconde', 'Serranos', 'Plaza Puerta Castillo', 'Plaza de Santo Martino (descanso de todos los pasos)', 'Sacramento', 'Plaza de San Isidoro', 'Cid', 'Calle Ancha', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Legión VII', 'Plaza de San Marcelo', 'Rúa', 'Plaza de las Concepciones', 'Jardín de San Francisco', 'Iglesia de Santa Nonia'],
 			notas: 'Declarada de Interés Turístico Nacional.'
 		},
 		{
@@ -828,13 +841,22 @@ var SSL_DATA = {
 		{
 			id: 'siete-palabras', slug: 'procesion-de-las-siete-palabras', dia: 'viernes-santo', tipo: 'procesion',
 			nombre: 'Sermón y Procesión de las Siete Palabras', hora: '18:00',
-			cofradias: ['siete-palabras'], salida: 'Plaza de San Marcelo'
+			cofradias: ['siete-palabras'], salida: 'Iglesia de San Marcelo',
+			recorrido: ['Legión VII', 'Avenida Independencia', 'Plaza de Santo Domingo', 'Ruiz de Salazar', 'Lope de Vega', 'Alfonso V', 'Gil y Carrasco', 'Burgo Nuevo', 'Avenida Independencia', 'Legión VII', 'Iglesia de San Marcelo']
 		},
 		{
+			// 2027 es año impar: se muestra la procesión de Minerva y Vera Cruz. La del año par se conserva en "variantes".
 			id: 'santo-entierro', slug: 'procesion-del-santo-entierro', dia: 'viernes-santo', tipo: 'procesion',
-			nombre: 'Solemne y Oficial Procesión del Santo Entierro', hora: null,
-			cofradias: ['minerva-vera-cruz'],
+			nombre: 'Solemne y Oficial Procesión del Santo Entierro', hora: '19:00',
+			cofradias: ['minerva-vera-cruz'], salida: 'Convento de las RR.MM. Benedictinas',
+			recorrido: ['Fernández Cadórniga', 'Plaza de San Martín', 'Plaza Mayor', 'Catedral', 'Calle Ancha', 'Ruiz de Salazar – Ramón y Cajal', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Rúa', 'Plaza de las Concepciones', 'Fernández Cadórniga', 'Convento de las RR.MM. Benedictinas'],
 			alterna: { pares: 'angustias-soledad', impares: 'minerva-vera-cruz' },
+			variantes: {
+				pares: {
+					cofradia: 'angustias-soledad', hora: '18:00', salida: 'Iglesia de Santa Nonia',
+					recorrido: ['Cofradía del Dulce Nombre de Jesús Nazareno', 'Jardín de San Francisco', 'Hospicio', 'Plaza del Grano', 'Santa Cruz', 'Plaza Mayor (Sermón de la Soledad)', 'Catedral', 'Cardenal Landázuri', 'Plaza del Vizconde', 'Serranos', 'Plaza Puerta Castillo', 'Plaza de Santo Martino (descanso de todos los pasos)', 'Sacramento', 'Plaza de San Isidoro', 'Cid', 'Calle Ancha', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Legión VII', 'Plaza de San Marcelo', 'Teatro', 'Rúa', 'Plaza de las Concepciones', 'Jardín de San Francisco', 'Iglesia de Santa Nonia']
+				}
+			},
 			notas: 'La organizan en años alternos la Cofradía de las Angustias y Soledad (años pares) y la Real Cofradía de Minerva y Vera Cruz (años impares). En 2027 le corresponde a Minerva y Vera Cruz.'
 		},
 
@@ -843,17 +865,20 @@ var SSL_DATA = {
 			id: 'desenclavo', slug: 'procesion-del-santo-cristo-del-desenclavo', dia: 'sabado-santo', tipo: 'procesion',
 			nombre: 'Procesión del Santo Cristo del Desenclavo', hora: '16:30',
 			cofradias: ['desenclavo'], salida: 'Patio del Colegio Leonés',
-			notas: 'Incluye el Acto del Desenclavo ante la Basílica de San Isidoro.'
+			recorrido: ['Serranos', 'Convento', 'Cardenal Landázuri', 'Catedral', 'Calle Ancha', 'Cid', 'Plaza de San Isidoro (Acto del Desenclavo)', 'Sacramento', 'Plaza de Santo Martino', 'Plaza Puerta Castillo', 'Serranos', 'Patio del Colegio Leonés']
 		},
 		{
 			id: 'soledad', slug: 'procesion-de-la-soledad', dia: 'sabado-santo', tipo: 'procesion',
 			nombre: 'Procesión de la Soledad', hora: '19:00',
-			cofradias: ['divino-obrero'], salida: 'Iglesia parroquial de Jesús Divino Obrero'
+			cofradias: ['divino-obrero'], salida: 'Iglesia de Jesús Divino Obrero',
+			recorrido: ['Víctor de los Ríos', 'Avenida José María Fernández', 'San Pedro', 'Catedral – Sierra Pambley', 'Calle Ancha', 'Varillas', 'Platerías', 'Plaza Mayor', 'Santa Cruz', 'Daoiz y Velarde', 'San Pablo', 'Víctor de los Ríos', 'Iglesia de Jesús Divino Obrero']
 		},
 		{
+			// El documento la titula «Procesión de las Llagas de Cristo»; por cofradía, día, hora y salida corresponde a Camino de la Luz.
 			id: 'camino-luz', slug: 'procesion-camino-de-la-luz', dia: 'sabado-santo', tipo: 'procesion',
 			nombre: 'Procesión Camino de la Luz', hora: '19:15',
-			cofradias: ['santo-sepulcro'], salida: 'Atrio de la Catedral'
+			cofradias: ['santo-sepulcro'], salida: 'Catedral de León',
+			recorrido: ['Mariano Domínguez Berrueta', 'Plaza Mayor', 'Plaza de San Martín', 'Fernández Cadórniga', 'Plaza de las Concepciones', 'Rúa', 'Plaza de San Marcelo', 'Calle Ancha', 'Catedral de León']
 		},
 		{
 			id: 'via-lucis', slug: 'piadoso-via-lucis', dia: 'sabado-santo', tipo: 'procesion',
@@ -865,7 +890,13 @@ var SSL_DATA = {
 		{
 			id: 'encuentro', slug: 'procesion-del-encuentro', dia: 'domingo-resurreccion', tipo: 'procesion',
 			nombre: 'Procesión de El Encuentro', hora: '08:45',
-			cofradias: ['divino-obrero'], salida: 'Iglesia parroquial de Jesús Divino Obrero',
+			cofradias: ['divino-obrero'], salida: 'Iglesia de Jesús Divino Obrero',
+			recorrido: ['Víctor de los Ríos', 'Obispo Almarcha', 'Daoiz y Velarde', 'Santa Cruz', 'Plaza Mayor', 'Platerías', 'Varillas', 'Esquina Calle Ancha', 'Sierra Pambley', 'Catedral (Acto de El Encuentro y desayuno)', 'Calle Ancha', 'Plaza Torres de Omaña', 'Plaza de San Isidoro', 'Cid', 'Calle Ancha', 'Platerías', 'Plaza Mayor', 'Santa Cruz', 'Daoiz y Velarde', 'Víctor de los Ríos'],
+			// Recorrido propio del paso de las Tres Marías hasta la Catedral
+			recorridosExtra: [
+				{ nombre: 'Paso de las Tres Marías', recorrido: ['Víctor de los Ríos', 'Obispo Almarcha', 'Avenida José María Fernández', 'San Pedro', 'Plaza de Puerta Obispo', 'Catedral'] }
+			],
+			notas: 'Una vez llegado a la Catedral, tras el acto y el desayuno, el cortejo sigue con normalidad.',
 			pasos: [{ paso: 'do-resurreccion', nombre: 'La Resurrección' }]
 		}
 	],
