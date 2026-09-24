@@ -977,7 +977,7 @@ var SSL_DATA = {
 			],
 			imagenes: [
 				{ src: 'img/bandas/angustias-1.jpg', src800: 'img/bandas/angustias-1-800.jpg', ancho: 1600, alto: 1066, alt: 'La agrupación musical, con su estandarte, por una calle del casco histórico de León de noche' },
-				{ src: 'img/bandas/angustias-2.jpg', src800: 'img/bandas/angustias-2-800.jpg', ancho: 1600, alto: 1120, alt: 'Hilera de músicos con túnica negra y cordón amarillo avanzando tras un paso' }
+				{ src: 'img/bandas/angustias-plaza.jpg', src800: 'img/bandas/angustias-plaza-800.jpg', ancho: 1600, alto: 900, alt: 'La agrupación musical, con túnica negra y cordón amarillo, tocando junto a su estandarte en la Plaza Mayor de León rodeada de público' }
 			]
 		},
 		{
@@ -1066,5 +1066,11 @@ var SSL_DATA = {
 		{ id: 'bm-reino-de-leon', nombre: 'Banda del Reino de León', tipo: 'banda-musica', cofradia: null, descripcion: null, repertorio: [] },
 		// Tipo no confirmado: no se muestra hasta verificarlo.
 		{ id: 'sm-perdon', nombre: 'Sección de Música de la Cofradía Santo Cristo del Perdón', tipo: null, cofradia: 'perdon', descripcion: null, repertorio: [] }
-	]
+	],
+
+	/* ---------- Carteles ----------
+	   Vacío hasta tener carteles reales. Formato de cada cartel:
+	   { id: 'cartel-2027', titulo: '...', anio: 2027, autor: '...', src: 'img/carteles/....jpg', src800: 'img/carteles/...-800.jpg', ancho: 0, alto: 0, alt: '...' }
+	   (autor y src800 opcionales) */
+	carteles: []
 };

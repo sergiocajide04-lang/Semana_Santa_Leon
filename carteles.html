@@ -3,8 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Cofradía · Semana Santa León 2027</title>
-	<meta name="description" content="Ficha de cofradía de la Semana Santa de León: historia, sede, procesiones y pasos.">
+	<title>Carteles · Semana Santa León 2027</title>
+	<meta name="description" content="Carteles de la Semana Santa de León.">
 	<meta name="theme-color" content="#4a1d5c">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,7 +13,7 @@
 	<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="archive-page ficha-page">
+<body class="archive-page">
 <div id="outer-wrap">
 
 	<a class="skip-link screen-reader-text" href="#main">Ir al contenido</a>
@@ -37,7 +37,7 @@
 						<nav id="site-navigation" aria-label="Menú principal">
 							<ul class="main-menu">
 								<li><a href="index.html"><span>Inicio</span></a></li>
-								<li class="has-children current-menu-item"><a href="cofradias.html" aria-current="page"><span>Cofradías<svg class="nav-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></a>
+								<li class="has-children"><a href="cofradias.html"><span>Cofradías<svg class="nav-arrow" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></a>
 									<!-- Las 16 cofradías se generan desde data.js -->
 									<ul class="sub-menu sub-menu-cofradias" data-render="menu-cofradias"></ul>
 								</li>
@@ -49,7 +49,7 @@
 										<li><a href="bandas.html#bandas-de-musica">Bandas de Música</a></li>
 									</ul>
 								</li>
-								<li><a href="carteles.html"><span>Carteles</span></a></li>
+								<li class="current-menu-item"><a href="carteles.html" aria-current="page"><span>Carteles</span></a></li>
 							</ul>
 						</nav>
 					</div>
@@ -83,15 +83,18 @@
 
 			<header class="page-header background-image-page-header pattern-bg">
 				<div class="container page-header-inner">
-					<h1 class="page-header-title">Cofradía</h1>
+					<h1 class="page-header-title">Carteles</h1>
+						<div class="page-subheading">
+							<p>Carteles de la Semana Santa de León</p>
+						</div>
 				</div>
 				<span class="background-image-page-header-overlay"></span>
 			</header>
 			<div id="content-wrap">
-				<div id="content" class="site-content">
+				<div id="content" class="site-content diary-page wrap carteles-page">
 
-					<!-- Ficha generada desde data.js según el parámetro ?c=slug -->
-					<article class="cofradia-ficha wrap" data-render="cofradia-ficha"></article>
+					<!-- Carteles generados desde data.js (SSL_DATA.carteles). Sin datos: aviso de próxima publicación. -->
+					<div class="carteles" data-render="carteles"></div>
 
 				</div>
 			</div>
@@ -113,10 +116,10 @@
 						<div class="footer-widget">
 							<ul class="menu">
 								<li class="menu-item"><a href="index.html">Inicio</a></li>
-								<li class="menu-item current-menu-item"><a href="cofradias.html" aria-current="page">Cofradías</a></li>
+								<li class="menu-item"><a href="cofradias.html">Cofradías</a></li>
 								<li class="menu-item"><a href="procesiones.html">Procesiones</a></li>
 								<li class="menu-item"><a href="bandas.html">Bandas musicales</a></li>
-								<li class="menu-item"><a href="carteles.html">Carteles</a></li>
+								<li class="menu-item current-menu-item"><a href="carteles.html" aria-current="page">Carteles</a></li>
 							</ul>
 						</div>
 					</div>

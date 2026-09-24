@@ -1445,6 +1445,7 @@ html { scroll-padding-top: 84px; }
 	line-height: 1.4;
 	letter-spacing: 1.1px;
 	font-weight: 600;
+	text-transform: uppercase;
 }
 
 .oceanwp-social-icons {
@@ -1489,6 +1490,30 @@ html { scroll-padding-top: 84px; }
 	width: 100%;
 	text-align: center;
 	font-weight: 600;
+}
+
+/* La línea de edición conserva el aspecto original del copyright */
+#copyright p {
+	margin: 0;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 1.4;
+}
+
+/* Firma de autoría: un escalón por encima del copyright, sin protagonismo */
+#copyright .copyright-autor {
+	margin-top: 9px;
+	font-size: 14px;
+	font-weight: 400;
+	line-height: 1.4;
+	letter-spacing: .02em;
+	color: var(--grey-dark);
+}
+
+#copyright .copyright-autor strong {
+	font-weight: 700;
+	color: var(--purple);
+	white-space: nowrap;
 }
 
 #footer-bottom a { color: var(--dark); }
@@ -2791,7 +2816,7 @@ html { scroll-padding-top: 84px; }
 }
 
 .repertorio-list li { padding: 3px 0; font-size: 14px; line-height: 1.35; }
-.repertorio-list li::marker { color: var(--gold); }
+.repertorio-list li::marker { color: var(--purple); }
 .repertorio-autor { display: block; font-size: 12.5px; color: var(--muted); }
 
 .repertorio-empty {
@@ -2860,12 +2885,54 @@ html { scroll-padding-top: 84px; }
 	padding: 5px 0;
 }
 
+/* Fotografías de la banda: antes del repertorio, con el mismo separador y rótulo */
+.banda-fotos {
+	margin-top: 6px;
+	padding-top: 14px;
+	border-top: 1px solid var(--stone-dark);
+}
+
+.banda-fotos .banda-repertorio-title { margin-bottom: 14px; }
+
 /* Galería de la banda */
 .banda-galeria {
 	display: flex;
 	gap: 12px;
-	margin-top: 12px;
 }
+
+/* ---------- Carteles ---------- */
+.carteles .carteles-empty { max-width: 640px; margin: 0 auto; text-align: center; }
+
+.carteles-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+	gap: 40px 28px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cartel { display: flex; flex-direction: column; gap: 6px; scroll-margin-top: 90px; }
+.cartel:target .cartel-figura { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* El cartel se ve entero, en su proporción */
+.cartel-figura {
+	margin: 0 0 8px;
+	aspect-ratio: var(--ar);
+	background: var(--stone);
+	box-shadow: 0 14px 30px -18px rgb(0 0 0 / 45%);
+}
+
+.cartel-figura img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.cartel-titulo { margin: 0; font-family: var(--font-serif); font-size: 20px; line-height: 1.25; }
+.cartel-meta { margin: 0; font-size: 13px; color: var(--muted); }
+
+@media (max-width: 680px) {
+	.carteles-grid { grid-template-columns: 1fr; gap: 34px; }
+}
+
+/* Tras las fotos, el desplegable respira un poco más */
+.banda-fotos + .banda-repertorio { margin-top: 18px; }
 
 .banda-foto {
 	margin: 0;

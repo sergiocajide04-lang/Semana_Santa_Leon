@@ -371,7 +371,8 @@
 		var imgs = b.imagenes || [];
 		if (!imgs.length) return '';
 		var destacada = imgs.length === 3;
-		return '<div class="banda-galeria banda-galeria--n' + imgs.length + '">' + imgs.map(function (im, i) {
+		return '<div class="banda-fotos"><h3 class="banda-repertorio-title">Fotografías</h3>' +
+			'<div class="banda-galeria banda-galeria--n' + imgs.length + '">' + imgs.map(function (im, i) {
 			var sizes = destacada
 				? (i === 0 ? '(max-width: 680px) 92vw, (max-width: 1280px) 64vw, 800px' : '(max-width: 680px) 92vw, (max-width: 1280px) 27vw, 340px')
 				: '(max-width: 680px) 92vw, (max-width: 1280px) 45vw, 570px';
@@ -379,7 +380,7 @@
 				'<img src="' + esc(im.src800) + '" srcset="' + esc(im.src800) + ' 800w, ' + esc(im.src) + ' ' + im.ancho + 'w" sizes="' + sizes + '"' +
 				' width="' + im.ancho + '" height="' + im.alto + '" alt="' + esc(im.alt) + '" loading="lazy" decoding="async">' +
 			'</figure>';
-		}).join('') + '</div>';
+		}).join('') + '</div></div>';
 	}
 
 	render('bandas', DATA.tiposBanda.map(function (t) {
@@ -392,16 +393,17 @@
 			(lista.length ? '<ul class="banda-cards">' + lista.map(function (b) {
 				// La relación con la cofradía (b.cofradia / b.vinculada) se mantiene en los datos pero no se muestra.
 				var rep = b.repertorio || [];
-				// Con repertorio o fotos la ficha ocupa toda la fila: información → repertorio → imágenes.
+				// Con repertorio o fotos la ficha ocupa toda la fila: información → fotografías → repertorio.
 				var completa = rep.length || (b.imagenes && b.imagenes.length);
 				return '<li class="banda-card' + (completa ? ' banda-card--completa' : '') + '" id="banda-' + esc(b.id) + '">' +
 					'<span class="banda-card-name">' + esc(b.nombre) + '</span>' +
 					(b.descripcion ? '<p>' + esc(b.descripcion) + '</p>' : '') +
-					// Con piezas: desplegable (cerrado por defecto). Sin piezas: aviso fijo.
+					bandaGaleria(b) +
+					// Con marchas: desplegable (cerrado por defecto). Sin marchas: aviso fijo.
 					(rep.length
 						? '<details class="banda-repertorio banda-repertorio--desplegable">' +
 							'<summary><h3 class="banda-repertorio-title">Repertorio' +
-								' <span class="banda-repertorio-count">' + rep.length + ' piezas</span></h3></summary>' +
+								' <span class="banda-repertorio-count">' + rep.length + (rep.length === 1 ? ' marcha' : ' marchas') + '</span></h3></summary>' +
 							'<ol class="repertorio-list">' + rep.map(function (r) {
 								return '<li><span class="repertorio-titulo">' + esc(r.titulo) + '</span>' +
 									(r.autor ? '<span class="repertorio-autor">' + esc(r.autor) + '</span>' : '') + '</li>';
@@ -411,11 +413,26 @@
 							'<h3 class="banda-repertorio-title">Repertorio</h3>' +
 							'<p class="repertorio-empty">Repertorio próximamente.</p>' +
 						'</div>') +
-					bandaGaleria(b) +
 				'</li>';
 			}).join('') + '</ul>' : '<p class="agenda-empty">Listado pendiente de publicación.</p>') +
 		'</section>';
 	}).join(''));
+
+	/* Carteles: rejilla desde data.js; sin datos, aviso de próxima publicación */
+	var carteles = DATA.carteles || [];
+	render('carteles', carteles.length
+		? '<ul class="carteles-grid">' + carteles.map(function (c) {
+			var src800 = c.src800 || c.src;
+			return '<li class="cartel" id="cartel-' + esc(c.id) + '">' +
+				'<figure class="cartel-figura" style="--ar:' + (c.ancho / c.alto).toFixed(4) + '">' +
+					'<img src="' + esc(src800) + '"' + (c.src800 ? ' srcset="' + esc(c.src800) + ' 800w, ' + esc(c.src) + ' ' + c.ancho + 'w" sizes="(max-width: 680px) 92vw, 400px"' : '') +
+					' width="' + c.ancho + '" height="' + c.alto + '" alt="' + esc(c.alt) + '" loading="lazy" decoding="async">' +
+				'</figure>' +
+				'<p class="cartel-titulo">' + esc(c.titulo) + '</p>' +
+				(c.anio || c.autor ? '<p class="cartel-meta">' + esc([c.anio, c.autor].filter(Boolean).join(' · ')) + '</p>' : '') +
+			'</li>';
+		}).join('') + '</ul>'
+		: '<p class="agenda-empty carteles-empty">Los carteles se publicarán próximamente.</p>');
 
 	/* ==========================================================================
 	   Comportamientos
