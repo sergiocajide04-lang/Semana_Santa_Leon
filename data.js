@@ -976,8 +976,8 @@ var SSL_DATA = {
 				{ titulo: 'Toques de oración', autor: 'Anónimo' }
 			],
 			imagenes: [
-				{ src: 'img/bandas/angustias-1.jpg', src800: 'img/bandas/angustias-1-800.jpg', ancho: 1600, alto: 1066, alt: 'La agrupación musical, con su estandarte, por una calle del casco histórico de León de noche' },
-				{ src: 'img/bandas/angustias-plaza.jpg', src800: 'img/bandas/angustias-plaza-800.jpg', ancho: 1600, alto: 900, alt: 'La agrupación musical, con túnica negra y cordón amarillo, tocando junto a su estandarte en la Plaza Mayor de León rodeada de público' }
+				{ src: 'img/bandas/angustias-plaza.jpg', src800: 'img/bandas/angustias-plaza-800.jpg', ancho: 1600, alto: 900, alt: 'La agrupación musical, con túnica negra y cordón amarillo, tocando junto a su estandarte en la Plaza Mayor de León rodeada de público' },
+				{ src: 'img/bandas/angustias-cordones.jpg', src800: 'img/bandas/angustias-cordones-800.jpg', ancho: 1600, alto: 1120, alt: 'Hilera de músicos con túnica negra y cordón amarillo avanzando tras un paso' }
 			]
 		},
 		{
