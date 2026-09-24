@@ -364,6 +364,24 @@
 	}
 
 	/* Bandas musicales: tres apartados */
+
+	// Galería de una banda. Con 3 fotos: principal + dos secundarias; con 2: pareja a la misma altura.
+	// "sizes" por posición para que el navegador elija entre la versión de 800 px y el original de 1600 px.
+	function bandaGaleria(b) {
+		var imgs = b.imagenes || [];
+		if (!imgs.length) return '';
+		var destacada = imgs.length === 3;
+		return '<div class="banda-galeria banda-galeria--n' + imgs.length + '">' + imgs.map(function (im, i) {
+			var sizes = destacada
+				? (i === 0 ? '(max-width: 680px) 92vw, (max-width: 1280px) 64vw, 800px' : '(max-width: 680px) 92vw, (max-width: 1280px) 27vw, 340px')
+				: '(max-width: 680px) 92vw, (max-width: 1280px) 45vw, 570px';
+			return '<figure class="banda-foto" style="--ar:' + (im.ancho / im.alto).toFixed(4) + '">' +
+				'<img src="' + esc(im.src800) + '" srcset="' + esc(im.src800) + ' 800w, ' + esc(im.src) + ' ' + im.ancho + 'w" sizes="' + sizes + '"' +
+				' width="' + im.ancho + '" height="' + im.alto + '" alt="' + esc(im.alt) + '" loading="lazy" decoding="async">' +
+			'</figure>';
+		}).join('') + '</div>';
+	}
+
 	render('bandas', DATA.tiposBanda.map(function (t) {
 		var lista = DATA.bandas.filter(function (b) { return b.tipo === t.id; });
 		return '<section class="bandas-group" id="' + esc(t.ancla) + '" aria-labelledby="h-' + esc(t.ancla) + '">' +
@@ -374,11 +392,14 @@
 			(lista.length ? '<ul class="banda-cards">' + lista.map(function (b) {
 				// La relación con la cofradía (b.cofradia / b.vinculada) se mantiene en los datos pero no se muestra.
 				var rep = b.repertorio || [];
-				return '<li class="banda-card" id="banda-' + esc(b.id) + '">' +
+				// Con repertorio o fotos la ficha ocupa toda la fila: información → repertorio → imágenes.
+				var completa = rep.length || (b.imagenes && b.imagenes.length);
+				return '<li class="banda-card' + (completa ? ' banda-card--completa' : '') + '" id="banda-' + esc(b.id) + '">' +
 					'<span class="banda-card-name">' + esc(b.nombre) + '</span>' +
 					(b.descripcion ? '<p>' + esc(b.descripcion) + '</p>' : '') +
 					'<div class="banda-repertorio">' +
-						'<h3 class="banda-repertorio-title">Repertorio</h3>' +
+						'<h3 class="banda-repertorio-title">Repertorio' +
+							(rep.length ? ' <span class="banda-repertorio-count">' + rep.length + ' piezas</span>' : '') + '</h3>' +
 						(rep.length
 							? '<ol class="repertorio-list">' + rep.map(function (r) {
 								return '<li><span class="repertorio-titulo">' + esc(r.titulo) + '</span>' +
@@ -386,6 +407,7 @@
 							}).join('') + '</ol>'
 							: '<p class="repertorio-empty">Repertorio próximamente.</p>') +
 					'</div>' +
+					bandaGaleria(b) +
 				'</li>';
 			}).join('') + '</ul>' : '<p class="agenda-empty">Listado pendiente de publicación.</p>') +
 		'</section>';
