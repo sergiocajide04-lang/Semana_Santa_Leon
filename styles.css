@@ -2822,6 +2822,33 @@ html { scroll-padding-top: 84px; }
 	color: var(--muted);
 }
 
+/* Repertorio desplegable: mismo aspecto que las filas Itinerario / Pasos */
+.banda-repertorio--desplegable summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	min-height: 44px;
+	margin-top: -6px;
+	cursor: pointer;
+	list-style: none;
+}
+
+.banda-repertorio--desplegable summary::-webkit-details-marker { display: none; }
+
+.banda-repertorio--desplegable .banda-repertorio-title { margin: 0; }
+
+.banda-repertorio--desplegable summary::after {
+	content: '+';
+	font-size: 22px;
+	line-height: 1;
+	color: var(--gold);
+}
+
+.banda-repertorio--desplegable[open] summary::after { content: '\2212'; }
+.banda-repertorio--desplegable summary:hover .banda-repertorio-title { color: var(--purple-dark); }
+.banda-repertorio--desplegable[open] .repertorio-list { margin-top: 10px; }
+
 /* Lista larga: reparto en columnas, cada pieza sin partir */
 .banda-card--completa .repertorio-list {
 	columns: 3 240px;

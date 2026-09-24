@@ -397,16 +397,20 @@
 				return '<li class="banda-card' + (completa ? ' banda-card--completa' : '') + '" id="banda-' + esc(b.id) + '">' +
 					'<span class="banda-card-name">' + esc(b.nombre) + '</span>' +
 					(b.descripcion ? '<p>' + esc(b.descripcion) + '</p>' : '') +
-					'<div class="banda-repertorio">' +
-						'<h3 class="banda-repertorio-title">Repertorio' +
-							(rep.length ? ' <span class="banda-repertorio-count">' + rep.length + ' piezas</span>' : '') + '</h3>' +
-						(rep.length
-							? '<ol class="repertorio-list">' + rep.map(function (r) {
+					// Con piezas: desplegable (cerrado por defecto). Sin piezas: aviso fijo.
+					(rep.length
+						? '<details class="banda-repertorio banda-repertorio--desplegable">' +
+							'<summary><h3 class="banda-repertorio-title">Repertorio' +
+								' <span class="banda-repertorio-count">' + rep.length + ' piezas</span></h3></summary>' +
+							'<ol class="repertorio-list">' + rep.map(function (r) {
 								return '<li><span class="repertorio-titulo">' + esc(r.titulo) + '</span>' +
 									(r.autor ? '<span class="repertorio-autor">' + esc(r.autor) + '</span>' : '') + '</li>';
-							}).join('') + '</ol>'
-							: '<p class="repertorio-empty">Repertorio próximamente.</p>') +
-					'</div>' +
+							}).join('') + '</ol>' +
+						'</details>'
+						: '<div class="banda-repertorio">' +
+							'<h3 class="banda-repertorio-title">Repertorio</h3>' +
+							'<p class="repertorio-empty">Repertorio próximamente.</p>' +
+						'</div>') +
 					bandaGaleria(b) +
 				'</li>';
 			}).join('') + '</ul>' : '<p class="agenda-empty">Listado pendiente de publicación.</p>') +
