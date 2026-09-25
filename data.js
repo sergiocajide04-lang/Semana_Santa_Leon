@@ -977,7 +977,8 @@ var SSL_DATA = {
 			],
 			imagenes: [
 				{ src: 'img/bandas/angustias-plaza.jpg', src800: 'img/bandas/angustias-plaza-800.jpg', ancho: 1600, alto: 900, alt: 'La agrupación musical, con túnica negra y cordón amarillo, tocando junto a su estandarte en la Plaza Mayor de León rodeada de público' },
-				{ src: 'img/bandas/angustias-cordones.jpg', src800: 'img/bandas/angustias-cordones-800.jpg', ancho: 1600, alto: 1120, alt: 'Hilera de músicos con túnica negra y cordón amarillo avanzando tras un paso' }
+				{ src: 'img/bandas/angustias-cordones.jpg', src800: 'img/bandas/angustias-cordones-800.jpg', ancho: 1600, alto: 1120, alt: 'Hilera de músicos con túnica negra y cordón amarillo avanzando tras un paso' },
+				{ src: 'img/bandas/angustias-3.jpg', src800: 'img/bandas/angustias-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte de la cofradía y músicos encapuchados junto a un paso ante la fachada de una iglesia' }
 			]
 		},
 		{
@@ -1053,14 +1054,52 @@ var SSL_DATA = {
 				{ src: 'img/bandas/nazareno-3.jpg', src800: 'img/bandas/nazareno-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Músicos de espaldas ante el paso de la Verónica en una mañana soleada' }
 			]
 		},
-		{ id: 'am-divino-obrero', nombre: 'Agrupación Musical Real Hermandad de Jesús Divino Obrero', tipo: 'agrupacion-musical', cofradia: 'divino-obrero', descripcion: null, repertorio: [] },
-		{ id: 'am-bienaventuranza', nombre: 'Agrupación Musical Santo Cristo de la Bienaventuranza', tipo: 'agrupacion-musical', cofradia: 'bienaventuranza', descripcion: null, repertorio: [] },
+		{
+			id: 'am-divino-obrero', nombre: 'Agrupación Musical Real Hermandad de Jesús Divino Obrero', tipo: 'agrupacion-musical', cofradia: 'divino-obrero', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/divino-obrero-1.jpg', src800: 'img/bandas/divino-obrero-1-800.jpg', ancho: 1600, alto: 1066, alt: 'Músico con capa morada y túnica blanca tendiendo la mano a un niño durante el desfile' },
+				{ src: 'img/bandas/divino-obrero-2.jpg', src800: 'img/bandas/divino-obrero-2-800.jpg', ancho: 1600, alto: 1066, alt: 'La banda, con capa morada y túnica blanca, desfilando tras su estandarte ante numeroso público' },
+				{ src: 'img/bandas/divino-obrero-3.jpg', src800: 'img/bandas/divino-obrero-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Músicos de espaldas con capa y capillo morados avanzando por una calle del centro de León' }
+			]
+		},
+		{
+			id: 'am-bienaventuranza', nombre: 'Agrupación Musical Santo Cristo de la Bienaventuranza', tipo: 'agrupacion-musical', cofradia: 'bienaventuranza', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/bienaventuranza-1.jpg', src800: 'img/bandas/bienaventuranza-1-800.jpg', ancho: 1600, alto: 1066, alt: 'Percusionistas con capillo azul junto al público que presencia el desfile' },
+				{ src: 'img/bandas/bienaventuranza-2.jpg', src800: 'img/bandas/bienaventuranza-2-800.jpg', ancho: 1600, alto: 1066, alt: 'La agrupación, con capillo azul, desfilando con sus tubas por delante del paso' },
+				{ src: 'img/bandas/bienaventuranza-3.jpg', src800: 'img/bandas/bienaventuranza-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Vista desde lo alto de la agrupación tocando en formación por una calle estrecha del casco antiguo' }
+			]
+		},
 		{ id: 'am-santo-sepulcro', nombre: 'Agrupación Musical Santo Sepulcro – Esperanza de la Vida', tipo: 'agrupacion-musical', cofradia: 'santo-sepulcro', descripcion: null, repertorio: [] },
-		{ id: 'am-gran-poder', nombre: 'Agrupación Musical Cristo del Gran Poder', tipo: 'agrupacion-musical', cofradia: 'gran-poder', descripcion: null, repertorio: [] },
-		{ id: 'cct-dulce-nombre', nombre: 'Banda de Cornetas y Tambores del Dulce Nombre de Jesús Nazareno', tipo: 'cornetas-tambores', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
+		{
+			id: 'am-gran-poder', nombre: 'Agrupación Musical Cristo del Gran Poder', tipo: 'agrupacion-musical', cofradia: 'gran-poder', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/gran-poder-1.jpg', src800: 'img/bandas/gran-poder-1-800.jpg', ancho: 1600, alto: 900, alt: 'Músicos encapuchados de negro con su estandarte junto a un paso en una mañana soleada' },
+				{ src: 'img/bandas/gran-poder-2.jpg', src800: 'img/bandas/gran-poder-2-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte negro bordado en oro entre los músicos encapuchados y el público' },
+				{ src: 'img/bandas/gran-poder-3.jpg', src800: 'img/bandas/gran-poder-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte de la agrupación ante el paso en la Plaza Mayor de León al atardecer' }
+			]
+		},
+		// Antes clasificada como banda de cornetas y tambores (id 'cct-desenclavo'); los enlaces generados usan el id nuevo.
+		{ id: 'am-desenclavo', nombre: 'Agrupación Musical Santo Cristo del Desenclavo', tipo: 'agrupacion-musical', cofradia: 'desenclavo', descripcion: null, repertorio: [] },
+		{
+			id: 'cct-dulce-nombre', nombre: 'Banda de Cornetas y Tambores del Dulce Nombre de Jesús Nazareno', tipo: 'cornetas-tambores', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/nazareno-cct-1.jpg', src800: 'img/bandas/nazareno-cct-1-800.jpg', ancho: 1600, alto: 1066, alt: 'Músicos encapuchados con cordón morado siguiendo el estandarte morado de la banda' },
+				{ src: 'img/bandas/nazareno-cct-2.jpg', src800: 'img/bandas/nazareno-cct-2-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte morado de la banda de cornetas y tambores entre los encapuchados, junto a un paso' }
+			]
+		},
 		{ id: 'cct-minerva', nombre: 'Banda de Cornetas y Tambores de la Real Cofradía de Minerva y Vera Cruz', tipo: 'cornetas-tambores', cofradia: 'minerva-vera-cruz', descripcion: null, repertorio: [] },
-		{ id: 'cct-desenclavo', nombre: 'Banda de Cornetas y Tambores del Santo Cristo del Desenclavo', tipo: 'cornetas-tambores', cofradia: 'desenclavo', descripcion: null, repertorio: [] },
-		{ id: 'cct-victoria', nombre: 'Banda de Cornetas y Tambores Santísimo Cristo de la Victoria', tipo: 'cornetas-tambores', cofradia: null, vinculada: 'amparo-leoneses', descripcion: null, repertorio: [] },
+		{
+			id: 'cct-victoria', nombre: 'Banda de Cornetas y Tambores Santísimo Cristo de la Victoria', tipo: 'cornetas-tambores', cofradia: null, vinculada: 'amparo-leoneses', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/victoria-1.jpg', src800: 'img/bandas/victoria-1-800.jpg', ancho: 1600, alto: 1066, alt: 'Músicos de uniforme con gorra blanca y su guion tras un paso, rodeados de público' },
+				{ src: 'img/bandas/victoria-2.jpg', src800: 'img/bandas/victoria-2-800.jpg', ancho: 1600, alto: 1066, alt: 'Cabecera de la banda de uniforme desfilando de noche con su estandarte' },
+				{ src: 'img/bandas/victoria-3.jpg', src800: 'img/bandas/victoria-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte de la banda ante la Casa Botines y el Palacio de los Guzmanes' }
+			]
+		},
+		// Añadidas sin datos: pendiente de completar descripción, repertorio y fotografías.
+		{ id: 'cct-soledad', nombre: 'Banda de Cornetas y Tambores de Nuestra Señora de la Soledad', tipo: 'cornetas-tambores', cofradia: null, descripcion: null, repertorio: [] },
+		{ id: 'cct-carmen-san-martin', nombre: 'Banda de Cornetas y Tambores de Nuestro Señor del Carmen de San Martín', tipo: 'cornetas-tambores', cofradia: null, descripcion: null, repertorio: [] },
 		{ id: 'bm-dulce-nombre', nombre: 'Banda de Música del Dulce Nombre de Jesús Nazareno', tipo: 'banda-musica', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
 		{ id: 'bm-siete-palabras', nombre: 'Banda de Música Siete Palabras', tipo: 'banda-musica', cofradia: 'siete-palabras', descripcion: null, repertorio: [] },
 		{ id: 'bm-reino-de-leon', nombre: 'Banda del Reino de León', tipo: 'banda-musica', cofradia: null, descripcion: null, repertorio: [] },

@@ -371,8 +371,12 @@
 		var imgs = b.imagenes || [];
 		if (!imgs.length) return '';
 		var destacada = imgs.length === 3;
+		// Con 3 fotos, el ancho de la principal sale de las proporciones: su altura iguala a las dos secundarias apiladas.
+		var cols = destacada
+			? ' style="grid-template-columns:' + ((imgs[0].ancho / imgs[0].alto) * (imgs[1].alto / imgs[1].ancho + imgs[2].alto / imgs[2].ancho)).toFixed(3) + 'fr 1fr"'
+			: '';
 		return '<div class="banda-fotos"><h3 class="banda-repertorio-title">Fotografías</h3>' +
-			'<div class="banda-galeria banda-galeria--n' + imgs.length + '">' + imgs.map(function (im, i) {
+			'<div class="banda-galeria banda-galeria--n' + imgs.length + '"' + cols + '>' + imgs.map(function (im, i) {
 			var sizes = destacada
 				? (i === 0 ? '(max-width: 680px) 92vw, (max-width: 1280px) 64vw, 800px' : '(max-width: 680px) 92vw, (max-width: 1280px) 27vw, 340px')
 				: '(max-width: 680px) 92vw, (max-width: 1280px) 45vw, 570px';
