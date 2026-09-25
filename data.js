@@ -1098,10 +1098,23 @@ var SSL_DATA = {
 			]
 		},
 		// Añadidas sin datos: pendiente de completar descripción, repertorio y fotografías.
-		{ id: 'cct-soledad', nombre: 'Banda de Cornetas y Tambores de Nuestra Señora de la Soledad', tipo: 'cornetas-tambores', cofradia: null, descripcion: null, repertorio: [] },
+		{
+			id: 'cct-soledad', nombre: 'Banda de Cornetas y Tambores de Nuestra Señora de la Soledad', tipo: 'cornetas-tambores', cofradia: null, descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/soledad-1.jpg', src800: 'img/bandas/soledad-1-800.jpg', ancho: 1066, alto: 1600, alt: 'Guion de la banda ante el paso de Jesús con la cruz, entre los músicos, por una calle del casco antiguo' },
+				{ src: 'img/bandas/soledad-2.jpg', src800: 'img/bandas/soledad-2-800.jpg', ancho: 1600, alto: 1066, alt: 'Cabecera de la banda, de uniforme negro con fajín morado, desfilando tras su guion' },
+				{ src: 'img/bandas/soledad-3.jpg', src800: 'img/bandas/soledad-3-800.jpg', ancho: 1600, alto: 1066, alt: 'Niño con tambor entre los músicos de uniforme negro y fajín morado' }
+			]
+		},
 		{ id: 'cct-carmen-san-martin', nombre: 'Banda de Cornetas y Tambores de Nuestro Señor del Carmen de San Martín', tipo: 'cornetas-tambores', cofradia: null, descripcion: null, repertorio: [] },
 		{ id: 'bm-dulce-nombre', nombre: 'Banda de Música del Dulce Nombre de Jesús Nazareno', tipo: 'banda-musica', cofradia: 'dulce-nombre-jesus-nazareno', descripcion: null, repertorio: [] },
-		{ id: 'bm-siete-palabras', nombre: 'Banda de Música Siete Palabras', tipo: 'banda-musica', cofradia: 'siete-palabras', descripcion: null, repertorio: [] },
+		{
+			id: 'bm-siete-palabras', nombre: 'Banda de Música Siete Palabras', tipo: 'banda-musica', cofradia: 'siete-palabras', descripcion: null, repertorio: [],
+			imagenes: [
+				{ src: 'img/bandas/siete-palabras-1.jpg', src800: 'img/bandas/siete-palabras-1-800.jpg', ancho: 1600, alto: 1066, alt: 'La banda de música, de uniforme azul con cordones dorados, desfilando tras el estandarte rojo de la Cofradía Siete Palabras' },
+				{ src: 'img/bandas/siete-palabras-2.jpg', src800: 'img/bandas/siete-palabras-2-800.jpg', ancho: 1600, alto: 1066, alt: 'Estandarte rojo bordado de la Cofradía Siete Palabras ante un paso en una mañana soleada' }
+			]
+		},
 		{ id: 'bm-reino-de-leon', nombre: 'Banda del Reino de León', tipo: 'banda-musica', cofradia: null, descripcion: null, repertorio: [] },
 		// Tipo no confirmado: no se muestra hasta verificarlo.
 		{ id: 'sm-perdon', nombre: 'Sección de Música de la Cofradía Santo Cristo del Perdón', tipo: null, cofradia: 'perdon', descripcion: null, repertorio: [] }
