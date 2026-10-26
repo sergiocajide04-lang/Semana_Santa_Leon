@@ -845,19 +845,22 @@ var SSL_DATA = {
 			recorrido: ['Legión VII', 'Avenida Independencia', 'Plaza de Santo Domingo', 'Ruiz de Salazar', 'Lope de Vega', 'Alfonso V', 'Gil y Carrasco', 'Burgo Nuevo', 'Avenida Independencia', 'Legión VII', 'Iglesia de San Marcelo']
 		},
 		{
-			// 2027 es año impar: se muestra la procesión de Minerva y Vera Cruz. La del año par se conserva en "variantes".
+			// Años impares (Minerva y Vera Cruz). La de los años pares va a continuación.
 			id: 'santo-entierro', slug: 'procesion-del-santo-entierro', dia: 'viernes-santo', tipo: 'procesion',
 			nombre: 'Solemne y Oficial Procesión del Santo Entierro', hora: '19:00',
 			cofradias: ['minerva-vera-cruz'], salida: 'Convento de las RR.MM. Benedictinas',
 			recorrido: ['Fernández Cadórniga', 'Plaza de San Martín', 'Plaza Mayor', 'Catedral', 'Calle Ancha', 'Ruiz de Salazar – Ramón y Cajal', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Rúa', 'Plaza de las Concepciones', 'Fernández Cadórniga', 'Convento de las RR.MM. Benedictinas'],
-			alterna: { pares: 'angustias-soledad', impares: 'minerva-vera-cruz' },
-			variantes: {
-				pares: {
-					cofradia: 'angustias-soledad', hora: '18:00', salida: 'Iglesia de Santa Nonia',
-					recorrido: ['Cofradía del Dulce Nombre de Jesús Nazareno', 'Jardín de San Francisco', 'Hospicio', 'Plaza del Grano', 'Santa Cruz', 'Plaza Mayor (Sermón de la Soledad)', 'Catedral', 'Cardenal Landázuri', 'Plaza del Vizconde', 'Serranos', 'Plaza Puerta Castillo', 'Plaza de Santo Martino (descanso de todos los pasos)', 'Sacramento', 'Plaza de San Isidoro', 'Cid', 'Calle Ancha', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Legión VII', 'Plaza de San Marcelo', 'Teatro', 'Rúa', 'Plaza de las Concepciones', 'Jardín de San Francisco', 'Iglesia de Santa Nonia']
-				}
-			},
+			alterna: { impares: 'minerva-vera-cruz' },
 			notas: 'La organizan en años alternos la Cofradía de las Angustias y Soledad (años pares) y la Real Cofradía de Minerva y Vera Cruz (años impares). En 2027 le corresponde a Minerva y Vera Cruz.'
+		},
+		{
+			// Años pares (Angustias y Soledad).
+			id: 'santo-entierro-par', slug: 'procesion-del-santo-entierro-ano-par', dia: 'viernes-santo', tipo: 'procesion',
+			nombre: 'Procesión del Santo Entierro (año par)', hora: '18:00',
+			cofradias: ['angustias-soledad'], salida: 'Iglesia de Santa Nonia',
+			recorrido: ['Cofradía del Dulce Nombre de Jesús Nazareno', 'Jardín de San Francisco', 'Hospicio', 'Plaza del Grano', 'Santa Cruz', 'Plaza Mayor (Sermón de la Soledad)', 'Catedral', 'Cardenal Landázuri', 'Plaza del Vizconde', 'Serranos', 'Plaza Puerta Castillo', 'Plaza de Santo Martino (descanso de todos los pasos)', 'Sacramento', 'Plaza de San Isidoro', 'Cid', 'Calle Ancha', 'Plaza de Santo Domingo', 'Avenida Independencia', 'Legión VII', 'Plaza de San Marcelo', 'Teatro', 'Rúa', 'Plaza de las Concepciones', 'Jardín de San Francisco', 'Iglesia de Santa Nonia'],
+			alterna: { pares: 'angustias-soledad' },
+			notas: 'La organiza en los años pares la Cofradía de Nuestra Señora de las Angustias y Soledad. En la Plaza Mayor tiene lugar el Sermón de la Soledad.'
 		},
 
 		/* Sábado Santo */
